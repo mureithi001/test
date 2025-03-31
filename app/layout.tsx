@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
-import { AuthProvider } from '@/components/auth-provider'
+import { ClerkProvider } from '@clerk/nextjs'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 
@@ -20,8 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthProvider>
+        <ClerkProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="min-h-screen flex flex-col">
               <Navbar />
               <main className="flex-grow">
@@ -29,8 +29,8 @@ export default function RootLayout({
               </main>
               <Footer />
             </div>
-          </AuthProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   )

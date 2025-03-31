@@ -24,10 +24,12 @@ export async function POST(request: Request) {
       await handleCheckoutSessionCompleted(session)
       break
     case 'customer.subscription.updated':
-      await handleSubscriptionUpdated(session)
+      const subscription = event.data.object as Stripe.Subscription
+      await handleSubscriptionUpdated(subscription)
       break
     case 'customer.subscription.deleted':
-      await handleSubscriptionDeleted(session)
+      const deletedSubscription = event.data.object as Stripe.Subscription
+      await handleSubscriptionDeleted(deletedSubscription)
       break
     default:
       return new NextResponse('Unhandled event type', { status: 200 })
@@ -55,27 +57,23 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
   })
 }
 
-async function handleSubscriptionUpdated(session: Stripe.Checkout.Session) {
-  const subscription = session.subscription as string
-  const customerId = session.customer as string
-  const userId = session.metadata?.userId as string
+async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
+  const customerId = subscription.customer as string
+  const userId = subscription.metadata?.userId as string
 
-  // Fetch the subscription details to get the period end
-  const subscriptionDetails = await stripe.subscriptions.retrieve(subscription)
-  
   await prisma.subscription.update({
     where: { userId },
     data: {
       customerId,
-      subscriptionId: subscription,
-      status: session.status,
-      currentPeriodEnd: new Date(subscriptionDetails.current_period_end * 1000),
+      subscriptionId: subscription.id,
+      status: subscription.status === 'active' ? 'active' : 'past_due',
+      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
     },
   })
 }
 
-async function handleSubscriptionDeleted(session: Stripe.Checkout.Session) {
-  const userId = session.metadata?.userId as string
+async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
+  const userId = subscription.metadata?.userId as string
 
   await prisma.subscription.update({
     where: { userId },

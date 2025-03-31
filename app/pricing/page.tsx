@@ -1,47 +1,58 @@
 'use client'
 
-import { useSession } from "next-auth/react"
+import { useUser } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { stripe } from "@/lib/stripe"
 
 export default function PricingPage() {
-  const { data: session } = useSession()
+  const { user, isLoaded } = useUser()
   const router = useRouter()
 
-  if (!session) {
-    router.push('/api/auth/signin')
-    return null
-  }
-
   const prices = {
-    monthly: process.env.STRIPE_PRICE_ID_MONTHLY!,
-    yearly: process.env.STRIPE_PRICE_ID_YEARLY!,
+    monthly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_MONTHLY!,
+    yearly: process.env.NEXT_PUBLIC_STRIPE_PRICE_ID_YEARLY!,
   }
 
   const handleCheckout = async (priceId: string) => {
-    try {
-      const checkoutSession = await stripe.checkout.sessions.create({
-        mode: 'subscription',
-        payment_method_types: ['card'],
-        line_items: [
-          {
-            price: priceId,
-            quantity: 1,
-          },
-        ],
-        customer_email: session.user?.email,
-        metadata: {
-          userId: session.user.id,
-        },
-        success_url: `${process.env.NEXTAUTH_URL}/subscription/success`,
-        cancel_url: `${process.env.NEXTAUTH_URL}/pricing`,
-      })
+    if (!user) {
+      router.push('/sign-in')
+      return
+    }
 
-      router.push(checkoutSession.url!)
+    try {
+      const checkoutSession = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          priceId,
+          userId: user.id,
+          email: user.emailAddresses[0].emailAddress,
+        }),
+      }).then(res => res.json())
+
+      if (checkoutSession.url) {
+        router.push(checkoutSession.url)
+      }
     } catch (error) {
       console.error('Error creating checkout session:', error)
     }
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[1, 2].map((i) => (
+              <div key={i} className="bg-gray-100 h-96 rounded-lg"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
