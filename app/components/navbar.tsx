@@ -11,17 +11,19 @@ export function Navbar() {
     { href: "/", label: "Home" },
     { href: "/blog", label: "Blog" },
     { href: "/marketplace", label: "Marketplace" },
+    { href: "/ebooks", label: "Ebooks" },
     { href: "/pricing", label: "Pricing" },
+    { href: "/about", label: "About" }
   ]
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-lg">
+    <nav className="bg-blush-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-gray-800 dark:text-white">
-                Freemium Blog
+              <span className="text-2xl font-bold text-plum-900">
+                ZuriVibes
               </span>
             </Link>
 
@@ -32,8 +34,8 @@ export function Navbar() {
                   href={item.href}
                   className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
                     pathname === item.href
-                      ? "border-b-2 border-indigo-500 text-gray-900 dark:text-white"
-                      : "border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:hover:border-gray-700 dark:hover:text-gray-300"
+                      ? "border-b-2 border-plum-900 text-plum-900"
+                      : "border-b-2 border-transparent text-mauve-700 hover:border-mauve-700 hover:text-plum-900"
                   }`}
                 >
                   {item.label}
@@ -43,6 +45,7 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center">
+            {/* Removed the duplicate ZuriVibes logo */}
             <UserButton afterSignOutUrl="/" />
           </div>
         </div>
