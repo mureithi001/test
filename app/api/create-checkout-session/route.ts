@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
-import { currentUser } from '@clerk/nextjs'
+import { getAuth } from '@clerk/nextjs/server'
 import { stripe } from '@/lib/stripe'
 
 export async function POST(req: Request) {
   try {
-    const user = await currentUser()
+    const auth = getAuth(req)
+    const user = auth.getUser()
     if (!user) {
       return new NextResponse('Unauthorized', { status: 401 })
     }

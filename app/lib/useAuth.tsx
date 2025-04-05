@@ -102,8 +102,12 @@ export function AuthProvider({ children }: { children: ReactNode }): JSX.Element
     signIn,
     signUp,
     signOut,
-    loadingElement: loading ? <div>Loading...</div> : null,
-    errorElement: error ? <div>Error: {error}</div> : null,
+    loadingElement: loading ? (
+      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-plum-900 mx-auto"></div>
+    ) : null,
+    errorElement: error ? (
+      <div className="text-red-500">{error}</div>
+    ) : null,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
