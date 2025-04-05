@@ -3,7 +3,6 @@
 import { ThemeProvider } from '@/components/theme-provider';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
 import { AuthProvider } from '@/lib/useAuth';
 
 export default function RootLayout({
@@ -20,7 +19,6 @@ export default function RootLayout({
             <main className="flex-grow">
               {children}
             </main>
-            <Footer />
           </div>
         </AuthProvider>
       </ThemeProvider>

@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useAuth } from '@/lib/useAuth';
 
 const PremiumSection = () => {
@@ -9,22 +8,22 @@ const PremiumSection = () => {
 
   const premiumFeatures = [
     {
-      icon: '/images/icons/premium/heart.svg',
+      color: 'bg-red-500',
       title: 'Exclusive Content',
       description: 'Access to premium guides, videos, and expert advice'
     },
     {
-      icon: '/images/icons/premium/lock.svg',
+      color: 'bg-blue-500',
       title: 'Ad-Free Experience',
       description: 'Enjoy a clean, distraction-free browsing experience'
     },
     {
-      icon: '/images/icons/premium/support.svg',
+      color: 'bg-green-500',
       title: 'Priority Support',
       description: 'Get faster responses and personalized assistance'
     },
     {
-      icon: '/images/icons/premium/community.svg',
+      color: 'bg-purple-500',
       title: 'Private Community',
       description: 'Join our exclusive members-only community'
     }
@@ -52,13 +51,7 @@ const PremiumSection = () => {
               className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-all duration-300"
             >
               <div className="flex items-center justify-center w-12 h-12 bg-plum-100 rounded-full mb-4">
-                <Image
-                  src={feature.icon}
-                  alt={feature.title}
-                  width={24}
-                  height={24}
-                  className="text-plum-900"
-                />
+                <div className={`w-6 h-6 rounded-full ${feature.color}`} />
               </div>
               <h3 className="text-lg font-semibold text-plum-900 mb-2">
                 {feature.title}
