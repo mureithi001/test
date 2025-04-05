@@ -10,20 +10,12 @@ export function ClientWrapper({ children }: { children: React.ReactNode }): JSX.
   const isHomePage = pathname === '/';
 
   return (
-    <>
-      {isHomePage ? (
-        <>
-          <Navigation />
-          {children}
-          <Footer />
-        </>
-      ) : (
-        <AuthProvider>
-          <Navigation />
-          {children}
-          <Footer />
-        </AuthProvider>
-      )}
-    </>
+    <AuthProvider>
+      <>
+        <Navigation />
+        {children}
+        <Footer />
+      </>
+    </AuthProvider>
   );
 }
