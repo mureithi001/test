@@ -10,10 +10,7 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client']
   },
-  compiler: {
-    removeConsole: false
-  },
-  transpilePackages: ['@prisma/client'],
+  swcMinify: true,
   images: {
     domains: ['*']
   }
