@@ -2,11 +2,17 @@
 
 import * as React from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from './supabase';
 import { User as SupabaseUser } from '@supabase/supabase-js';
+import { supabase } from './supabase';
+
+interface User extends SupabaseUser {
+  subscription?: {
+    status: 'active' | 'canceled' | 'past_due'
+  };
+}
 
 interface AuthContextType {
-  user: SupabaseUser | null;
+  user: User | null;
   loading: boolean;
   error: string | null;
   signIn: (email: string, password: string) => Promise<void>;

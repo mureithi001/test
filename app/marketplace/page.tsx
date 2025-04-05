@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { useAuth } from "@/lib/useAuth";
 import { supabase } from "@/lib/supabase";
 import Image from 'next/image';
 
@@ -19,7 +19,7 @@ interface Product {
 const categories = ['All', 'Hips', 'Tummy', 'Skin', 'Period'];
 
 export default function MarketplacePage() {
-  const { user } = useUser();
+  const { user } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('All');
