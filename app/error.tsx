@@ -1,30 +1,17 @@
 'use client';
 
-import { useEffect } from 'react';
-
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
-
+export default function Error() {
   return (
-    <div className="min-h-screen bg-blush-50 flex items-center justify-center">
-      <div className="text-center p-8">
-        <h1 className="text-3xl font-bold text-plum-900 mb-4">Something went wrong!</h1>
-        <p className="text-mauve-700 mb-6">Please try refreshing the page.</p>
-        <button
-          onClick={reset}
-          className="bg-plum-900 text-white px-6 py-3 rounded-lg hover:bg-plum-800"
-        >
-          Try again
-        </button>
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <h1 className="text-6xl font-bold">500</h1>
+      <h2 className="text-2xl mt-4">Something went wrong</h2>
+      <p className="mt-4 text-gray-600">Please try refreshing the page.</p>
+      <button
+        onClick={() => window.location.reload()}
+        className="mt-6 px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+      >
+        Try again
+      </button>
     </div>
   );
 }
