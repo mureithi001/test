@@ -2,40 +2,44 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 
 const slides = [
   {
     title: 'How to Grow Your Nyash Naturally',
     description: 'Discover natural techniques to enhance your curves',
-    image: '/images/nyash.jpg',
+    color: 'bg-mauve-700',
     buttons: [
       { text: 'Read Free Tips', href: '/tips/nyash' },
-      { text: 'Unlock Premium 🔒', href: '/premium/nyash' }
+      { text: 'Unlock Premium ', href: '/premium/nyash' }
     ]
   },
   {
     title: 'Firm Breasts Without Surgery',
     description: 'Natural methods to achieve firmer, healthier breasts',
-    image: '/images/breasts.jpg',
+    color: 'bg-plum-900',
     buttons: [
       { text: 'Read Free Tips', href: '/tips/breasts' },
-      { text: 'Unlock Premium 🔒', href: '/premium/breasts' }
+      { text: 'Unlock Premium ', href: '/premium/breasts' }
     ]
   },
   {
     title: 'Reduce Thigh Darkness',
     description: 'Natural remedies for darker inner thighs',
-    image: '/images/thighs.jpg',
+    color: 'bg-gold-900',
     buttons: [
       { text: 'Read Free Tips', href: '/tips/thighs' },
-      { text: 'Unlock Premium 🔒', href: '/premium/thighs' }
+      { text: 'Unlock Premium ', href: '/premium/thighs' }
     ]
   }
 ];
 
 export default function HeroCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -44,6 +48,10 @@ export default function HeroCarousel() {
 
     return () => clearInterval(interval);
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="relative h-[600px]">
@@ -58,13 +66,8 @@ export default function HeroCarousel() {
             className="absolute inset-0"
           >
             <div className="relative h-full">
-              <div className="absolute inset-0 bg-blush-50">
-                <Image
-                  src={slide.image}
-                  alt={slide.title}
-                  fill
-                  className="object-cover"
-                />
+              <div className={`absolute inset-0 ${slide.color} rounded-lg`}>
+                {/* Color fill instead of image */}
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
                 <div className="container mx-auto px-4 h-full flex flex-col justify-center">

@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { ClientWrapper } from './components/client-wrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ZuriVibes',
-  description: 'Natural beauty and wellness solutions',
+  title: 'ZuriVibes - Natural Beauty Solutions',
+  description: 'Discover natural beauty products and wellness solutions for a healthy lifestyle.',
 };
 
 export default function RootLayout({
@@ -17,7 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <ClientWrapper>
+          <main className="min-h-screen bg-blush-50">
+            {children}
+          </main>
+        </ClientWrapper>
       </body>
     </html>
   );

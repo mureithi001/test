@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { motion } from 'framer-motion';
@@ -13,6 +13,11 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    // Clear error on mount
+    setError('');
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,7 +49,7 @@ const LoginPage = () => {
 
       if (signInError) throw signInError;
 
-      router.push('/dashboard');
+      router.push('/');
     } catch (error: any) {
       setError(error.message);
     } finally {

@@ -1,65 +1,222 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { useAuth } from '@/lib/useAuth';
+import { useState } from 'react';
+import { Button } from './ui/button';
+
+interface NavigationProps {
+  // Add any props that the Navigation component might receive
+}
 
 const Navigation = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const router = useRouter();
+  const { user, signOut, loading } = useAuth();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (err) {
+      console.error('Error signing out:', err);
     }
   };
 
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="navbar bg-glassmorphism">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-plum-900">
-              ZuriVibes
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            <Link
+              href="/"
+              className="flex-shrink-0 flex items-center"
+            >
+              <span className="gradient-text text-2xl font-bold">
+                ZuriVibes
+              </span>
             </Link>
-          </div>
 
-          {/* Search Bar */}
-          <div className="flex-1 max-w-sm ml-4 mr-4">
-            <form onSubmit={handleSearch} className="flex items-center">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search articles, products..."
-                className="flex-1 px-3 py-1.5 border border-mauve-200 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-mauve-500 focus:border-transparent text-sm"
-              />
-              <button
-                type="submit"
-                className="px-3 py-1.5 bg-mauve-700 text-white rounded-r-lg hover:bg-mauve-800 transition-colors text-sm"
+            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <Link
+                href="/"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
               >
-                🔍
-              </button>
-            </form>
+                Home
+              </Link>
+
+              <Link
+                href="/products"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+              >
+                Products
+              </Link>
+
+              <Link
+                href="/services"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+              >
+                Services
+              </Link>
+
+              <Link
+                href="/ebooks"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+              >
+                eBooks
+              </Link>
+
+              <Link
+                href="/blog"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+              >
+                Blog
+              </Link>
+
+              <Link
+                href="/about"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+              >
+                About
+              </Link>
+            </div>
           </div>
 
-          {/* Auth Buttons */}
-          <div className="flex items-center space-x-2">
-            <Link
-              href="/login"
-              className="px-3 py-1.5 border border-mauve-700 text-mauve-700 rounded-lg hover:bg-mauve-50 transition-colors text-sm"
+          <div className="hidden sm:ml-6 sm:flex sm:items-center">
+            {loading ? (
+              <div className="flex items-center space-x-4">
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-plum-900"></div>
+              </div>
+            ) : (
+              <div className="ml-3 relative">
+                {user ? (
+                  <>
+                    <Button
+                      onClick={handleSignOut}
+                      variant="outline"
+                      size="sm"
+                      className="hover-glow transition-all duration-300"
+                    >
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="hover-glow transition-all duration-300"
+                    >
+                      <Link href="/login">Login</Link>
+                    </Button>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="-mr-2 flex items-center sm:hidden">
+            <Button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              variant="outline"
+              size="sm"
+              className="hover-glow transition-all duration-300"
             >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="px-3 py-1.5 bg-mauve-700 text-white rounded-lg hover:bg-mauve-800 transition-colors text-sm"
-            >
-              Sign Up
-            </Link>
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {isMenuOpen ? (
+                  <path d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className={`sm:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          <Link
+            href="/"
+            className="block px-3 py-2 rounded-md text-base font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+          >
+            Home
+          </Link>
+
+          <Link
+            href="/products"
+            className="block px-3 py-2 rounded-md text-base font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+          >
+            Products
+          </Link>
+
+          <Link
+            href="/services"
+            className="block px-3 py-2 rounded-md text-base font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+          >
+            Services
+          </Link>
+
+          <Link
+            href="/ebooks"
+            className="block px-3 py-2 rounded-md text-base font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+          >
+            eBooks
+          </Link>
+
+          <Link
+            href="/blog"
+            className="block px-3 py-2 rounded-md text-base font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+          >
+            Blog
+          </Link>
+
+          <Link
+            href="/about"
+            className="block px-3 py-2 rounded-md text-base font-medium text-plum-900 hover:text-rose-500 hover-glow transition-all duration-300"
+          >
+            About
+          </Link>
+        </div>
+
+        <div className="pt-4 pb-3 border-t border-mauve-700">
+          <div className="px-2">
+            {loading ? (
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-plum-900 mx-auto"></div>
+            ) : (
+              <div className="space-y-1">
+                {user ? (
+                  <>
+                    <Button
+                      onClick={handleSignOut}
+                      variant="outline"
+                      size="sm"
+                      className="hover-glow transition-all duration-300"
+                    >
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className="hover-glow transition-all duration-300"
+                    >
+                      <Link href="/login">Login</Link>
+                    </Button>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
