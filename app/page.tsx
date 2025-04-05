@@ -2,7 +2,6 @@
 
 import type { NextPage } from 'next';
 import Link from "next/link";
-import { useAuth } from '@/lib/useAuth';
 import { getFeaturedEBooks } from '@/lib/supabase';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -77,7 +76,6 @@ const HeroCarousel = () => {
 };
 
 const Page: NextPage = () => {
-  const { user } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
