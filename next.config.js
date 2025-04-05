@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  reactStrictMode: true,
-  swcMinify: true,
   typescript: {
     ignoreBuildErrors: true
   },
@@ -10,16 +8,14 @@ const nextConfig = {
     ignoreDuringBuilds: true
   },
   experimental: {
-    serverActions: true,
     serverComponentsExternalPackages: ['@prisma/client']
   },
+  compiler: {
+    removeConsole: false
+  },
+  transpilePackages: ['@prisma/client'],
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**'
-      }
-    ]
+    domains: ['*']
   }
 };
 
