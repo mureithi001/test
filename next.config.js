@@ -2,23 +2,13 @@
 const nextConfig = {
   output: 'standalone',
   typescript: {
-    ignoreBuildErrors: true
+    ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true
-  },
-  images: {
-    unoptimized: true
+    ignoreDuringBuilds: true,
   },
   experimental: {
-    optimizePackageImports: ['@prisma/client'],
     serverComponentsExternalPackages: ['@prisma/client']
-  },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.optimization.nodeEnv = false;
-    }
-    return config;
   }
 };
 
