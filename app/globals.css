@@ -3,26 +3,200 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --plum-900: #6D28D9;
+  --plum-800: #6B21A8;
+  --plum-700: #7C3AED;
+  --plum-600: #8B5CF6;
+  --plum-500: #A78BFA;
+  --plum-400: #C084FC;
+  --plum-300: #D8B4FE;
+  --plum-200: #E9D5FF;
+  --plum-100: #F3E8FF;
+  --plum-50: #FDF4FF;
+  
+  --mauve-900: #4A5568;
+  --mauve-800: #434F5E;
+  --mauve-700: #5A67D8;
+  --mauve-600: #6670F3;
+  --mauve-500: #7C86F5;
+  --mauve-400: #919CF7;
+  --mauve-300: #A7B3FA;
+  --mauve-200: #BDC2FC;
+  --mauve-100: #D1D5FE;
+  --mauve-50: #E7E9FF;
+  
+  --rose-900: #9333EA;
+  --rose-800: #9747FF;
+  --rose-700: #A855F7;
+  --rose-600: #B453FF;
+  --rose-500: #C06AFF;
+  --rose-400: #D17CFF;
+  --rose-300: #E192FF;
+  --rose-200: #F0A8FF;
+  --rose-100: #FDD0FF;
+  --rose-50: #FFE4FF;
+  
+  --coral-900: #EF4444;
+  --coral-800: #F43F5E;
+  --coral-700: #F87171;
+  --coral-600: #FB8B8B;
+  --coral-500: #FC9F9F;
+  --coral-400: #FDBDBD;
+  --coral-300: #FECAC0;
+  --coral-200: #FEE2E2;
+  --coral-100: #FEF2F2;
+  --coral-50: #FFF5F5;
+  
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-hover: rgba(255, 255, 255, 0.15);
+  --shadow-glass: 0 0 10px rgba(0, 0, 0, 0.1);
+  --shadow-glass-lg: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-blush-50 text-plum-900;
+}
+
+/* Glassmorphism styles */
+@layer utilities {
+  .glass-card {
+    @apply bg-glass-bg backdrop-blur-sm border border-glass-border rounded-xl p-6
+    transition-all duration-200 ease-out hover:bg-glass-hover;
+  }
+
+  .glass-card:hover {
+    @apply shadow-glass-lg;
+  }
+
+  .glass-button {
+    @apply bg-glass-bg backdrop-blur-sm border border-glass-border rounded-lg px-4 py-2
+    transition-all duration-200 ease-out hover:bg-glass-hover;
+  }
+
+  .glass-button:hover {
+    @apply shadow-glass;
+  }
+
+  .glass-input {
+    @apply bg-glass-bg backdrop-blur-sm border border-glass-border rounded-lg px-3 py-2
+    transition-all duration-200 ease-out focus:ring-2 focus:ring-mauve-500
+    focus:border-mauve-500 focus:outline-none;
+  }
+
+  .glass-container {
+    @apply bg-glass-bg backdrop-blur-lg border border-glass-border rounded-2xl p-8
+    transition-all duration-200 ease-out hover:bg-glass-hover;
+  }
+
+  .glass-container:hover {
+    @apply shadow-glass-lg;
+  }
+
+  .glass-profile {
+    @apply bg-glass-bg backdrop-blur-sm border border-glass-border rounded-full
+    transition-all duration-200 ease-out hover:bg-glass-hover;
+  }
+
+  .glass-profile:hover {
+    @apply shadow-glass;
+  }
+
+  .glass-overlay {
+    @apply bg-glass-bg backdrop-blur-sm absolute inset-0
+    transition-all duration-200 ease-out hover:bg-glass-hover;
+  }
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-plum-600 to-rose-500 bg-clip-text text-transparent;
+}
+
+/* Hover effects */
+.hover-glow {
+  @apply transition-all duration-300 ease-out;
+}
+
+.hover-glow:hover {
+  @apply transform scale-105;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-plum-600 to-rose-500 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-all duration-300;
+}
+
+.btn-secondary {
+  @apply bg-white text-plum-900 px-6 py-3 rounded-lg font-semibold hover:bg-plum-50 transition-all duration-300;
+}
+
+/* Card effects */
+.card {
+  @apply bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl;
+}
+
+/* Navbar styles */
+.navbar {
+  @apply bg-gradient-to-r from-blush-50 to-plum-50 backdrop-blur-sm border-b border-glass-border;
+}
+
+/* Footer styles */
+.footer {
+  @apply bg-gradient-to-r from-plum-900 to-rose-900 text-white;
+}
+
+/* Social icons */
+.social-icon {
+  @apply w-6 h-6 hover-glow;
+}
+
+/* Newsletter form */
+.newsletter-form {
+  @apply bg-white/10 backdrop-blur-sm rounded-lg p-4;
+}
+
+/* Form inputs */
+.form-input {
+  @apply bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-plum-500;
+}
+
+/* Button hover effects */
+.btn-primary:hover {
+  @apply transform scale-105;
+}
+
+/* Card hover effects */
+.card:hover {
+  @apply transform scale-105;
+}
+
+/* Gradient backgrounds */
+.bg-gradient {
+  @apply bg-gradient-to-r from-plum-50 to-rose-50;
+}
+
+/* Shadow effects */
+.shadow-card {
+  @apply shadow-lg hover:shadow-xl transition-all duration-300;
+}
+
+/* Glass button */
+.btn-glass {
+  @apply bg-glass-bg border border-glass-border rounded-lg px-6 py-3 font-semibold hover:bg-glass-bg/20 transition-all duration-300;
+}
+
+/* Newsletter button */
+.newsletter-btn {
+  @apply bg-gradient-to-r from-plum-600 to-rose-500 text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-all duration-300;
+}
+
+/* Social links */
+.social-links {
+  @apply flex space-x-4;
+}
+
+/* Newsletter input */
+.newsletter-input {
+  @apply bg-white/5 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-plum-500;
 }

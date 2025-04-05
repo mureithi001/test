@@ -67,7 +67,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       customerId,
       subscriptionId: subscription,
       status: 'active',
-      currentPeriodEnd: new Date(subscriptionDetails.current_period_end * 1000),
+      currentPeriodEnd: new Date((subscriptionDetails as any).current_period_end * 1000),
     },
   })
 }
@@ -82,7 +82,7 @@ async function handleSubscriptionUpdated(subscription: Stripe.Subscription) {
       customerId,
       subscriptionId: subscription.id,
       status: subscription.status === 'active' ? 'active' : 'past_due',
-      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
+      currentPeriodEnd: new Date((subscription as any).current_period_end * 1000),
     },
   })
 }

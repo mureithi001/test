@@ -1,37 +1,29 @@
-import { Inter } from 'next/font/google'
-import './globals.css'
-import { ThemeProvider } from '@/components/theme-provider'
-import { ClerkProvider } from '@clerk/nextjs'
-import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { ClientWrapper } from './components/client-wrapper';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
-  title: 'Freemium Blog',
-  description: 'A premium blog platform with subscription and marketplace features',
-}
+export const metadata: Metadata = {
+  title: 'ZuriVibes - Natural Beauty Solutions',
+  description: 'Discover natural beauty products and wellness solutions for a healthy lifestyle.',
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ClerkProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="min-h-screen flex flex-col">
-              <Navbar />
-              <main className="flex-grow">
-                {children}
-              </main>
-              <Footer />
-            </div>
-          </ThemeProvider>
-        </ClerkProvider>
+        <ClientWrapper>
+          <main className="min-h-screen bg-blush-50">
+            {children}
+          </main>
+        </ClientWrapper>
       </body>
     </html>
-  )
+  );
 }

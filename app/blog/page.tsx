@@ -1,9 +1,10 @@
 'use client'
 
 import Link from "next/link"
-import { useUser } from "@clerk/nextjs"
+import { ClerkProvider } from "@clerk/nextjs"
 import { supabase } from "@/lib/supabase"
 import { useEffect, useState } from "react"
+import { useAuth } from "@/lib/useAuth"
 
 interface Article {
   id: string
@@ -14,19 +15,20 @@ interface Article {
   created_at: string
 }
 
-interface UserMetadata {
+interface User {
+  id: string;
   subscription?: {
     status: 'active' | 'canceled' | 'past_due'
-  }
+  };
 }
 
 export default function BlogPage() {
-  const { user, isLoaded: isUserLoaded } = useUser()
+  const { user, loading: userLoading } = useAuth();
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(true)
 
-  const hasActiveSubscription = user?.publicMetadata && 
-    (user.publicMetadata as UserMetadata).subscription?.status === 'active'
+  const subscription = user?.subscription;
+  const hasActiveSubscription = subscription?.status === 'active'
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -49,7 +51,7 @@ export default function BlogPage() {
     fetchArticles()
   }, [])
 
-  if (loading || !isUserLoaded) {
+  if (loading || userLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="animate-pulse">
@@ -61,7 +63,7 @@ export default function BlogPage() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
