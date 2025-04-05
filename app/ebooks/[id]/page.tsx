@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/lib/useAuth';
+import { supabase } from '@/lib/supabase';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 

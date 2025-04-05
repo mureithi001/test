@@ -4,6 +4,7 @@ import { useAuth } from '@/lib/useAuth';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function PaymentPage() {
   const { user } = useAuth();

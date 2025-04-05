@@ -1,9 +1,10 @@
 'use client';
 
-import * as React from 'react';
+import React, { type ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import { User as SupabaseUser } from '@supabase/supabase-js';
+import type { JSX } from 'react/jsx-runtime';
 
 interface AuthContextType {
   user: SupabaseUser | null;
@@ -12,13 +13,13 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  loadingElement: React.ReactElement | null;
-  errorElement: React.ReactElement | null;
+  loadingElement: JSX.Element | null;
+  errorElement: JSX.Element | null;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }: { children: React.ReactNode }): React.ReactElement {
+export function AuthProvider({ children }: { children: ReactNode }): JSX.Element {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -103,12 +104,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }): React
     signUp,
     signOut,
     loadingElement: loading ? (
-      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-plum-900 mx-auto" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
+      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-plum-900 mx-auto">Loading...</div>
     ) : null,
     errorElement: error ? (
-      <div className="text-red-500" role="alert">{error}</div>
+      <div className="text-red-500">{error}</div>
     ) : null,
   };
 

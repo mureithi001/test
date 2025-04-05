@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/lib/useAuth';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { motion } from 'framer-motion';
@@ -41,8 +42,18 @@ const searchContent = [
 ];
 
 export default function SearchPage() {
+  interface SearchResult {
+    title: string;
+    type: string;
+    category: string;
+    description: string;
+    color: string;
+    href: string;
+  }
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [results, setResults] = useState([]);
+  const [selectedArticle, setSelectedArticle] = useState<string | null>(null);
+  const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
 
@@ -55,7 +66,7 @@ export default function SearchPage() {
     }
   }, []);
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (query: string) => {
     if (!query.trim()) {
       setResults([]);
       return;

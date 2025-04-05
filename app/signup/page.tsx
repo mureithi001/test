@@ -75,7 +75,11 @@ const SignupPage = () => {
 
       router.push('/auth/verify-email');
     } catch (error) {
-      setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }
@@ -92,7 +96,11 @@ const SignupPage = () => {
       });
       if (error) throw error;
     } catch (error) {
-      setError(error.message);
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     } finally {
       setLoading(false);
     }

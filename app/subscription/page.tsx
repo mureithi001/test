@@ -1,6 +1,8 @@
 'use client';
 
 import { useAuth } from '@/lib/useAuth';
+import React from 'react';
+import Link from 'next/link';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { motion } from 'framer-motion';
 

@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from '@/components/theme-provider';
 import { ClerkProvider } from '@clerk/nextjs';
-import { Navbar } from '@/components/navbar';
+import Navbar from '@/components/navigation';
 import { AuthProvider } from '@/lib/useAuth';
 
 export default function RootLayout({
