@@ -1,29 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true
   },
-  staticPageGenerationTimeout: 180,
+  experimental: {
+    serverActions: true,
+    serverComponentsExternalPackages: ['@prisma/client']
+  },
   images: {
-    domains: ['images.unsplash.com', 'localhost'],
-    unoptimized: true,
-  },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        fs: false,
-        path: false,
-      };
-    }
-    return config;
-  },
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**'
+      }
+    ]
+  }
 };
 
 module.exports = nextConfig;

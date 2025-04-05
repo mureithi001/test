@@ -1,11 +1,4 @@
 {
-  "version": 2,
-  "buildCommand": "next build",
-  "installCommand": "npm install",
   "framework": "nextjs",
-  "devCommand": "next dev",
-  "outputDirectory": ".next",
-  "env": {
-    "NEXT_TELEMETRY_DISABLED": "1"
-  }
+  "buildCommand": "prisma generate && next build"
 }
