@@ -1,18 +1,29 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/useAuth';
+
+const PROTECTED_ROUTES = [
+  '/dashboard',
+  '/checkout',
+  '/profile',
+  '/payment',
+  '/premium',
+  '/search',
+  '/subscription',
+];
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { user, loading } = useAuth();
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (!loading && !user && PROTECTED_ROUTES.includes(pathname)) {
       router.push('/login');
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, pathname]);
 
   if (loading) {
     return (
@@ -22,7 +33,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     );
   }
 
-  if (!user) {
+  if (!user && PROTECTED_ROUTES.includes(pathname)) {
     return null;
   }
 
