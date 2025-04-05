@@ -9,6 +9,16 @@ const nextConfig = {
   },
   images: {
     unoptimized: true
+  },
+  experimental: {
+    optimizePackageImports: ['@prisma/client'],
+    serverComponentsExternalPackages: ['@prisma/client']
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.optimization.nodeEnv = false;
+    }
+    return config;
   }
 };
 
