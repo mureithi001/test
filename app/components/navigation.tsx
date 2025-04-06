@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useAuth } from '@/app/lib/useAuth';
+import { useAuth } from '@/lib/useAuth';
 import { useState } from 'react';
 import { Button } from './ui/button';
 

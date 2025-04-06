@@ -1,7 +1,7 @@
 'use client';
 
-import { useAuth } from '@/app/lib/useAuth';
-import ProtectedRoute from '@/app/components/ProtectedRoute';
+import { useAuth } from '@/lib/useAuth';
+import ProtectedRoute from '@/components/ProtectedRoute';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 

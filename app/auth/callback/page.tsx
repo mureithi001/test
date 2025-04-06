@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createServerClient } from '@/app/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 export default function AuthCallbackPage() {
   const router = useRouter();
@@ -10,7 +10,6 @@ export default function AuthCallbackPage() {
   useEffect(() => {
     const handleAuthResponse = async () => {
       try {
-        const supabase = createServerClient();
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) throw new Error('User not authenticated');
 

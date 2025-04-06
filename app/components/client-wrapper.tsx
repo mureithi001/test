@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth, AuthProvider } from '@/app/lib/useAuth';
+import { useAuth, AuthProvider } from '@/lib/useAuth';
 import Navigation from './navigation';
 import Footer from './footer';
 import { usePathname } from 'next/navigation';
