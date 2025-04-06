@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { ClerkProvider } from "@clerk/nextjs"
-import { supabase } from '../lib/supabase'
-import { useAuth } from '../lib/useAuth'
+import { supabase } from '@/app/lib/supabase'
+import { useAuth } from '@/app/lib/useAuth'
 import { useEffect, useState } from "react"
 
 interface Article {
