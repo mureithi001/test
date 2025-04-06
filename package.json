@@ -15,8 +15,8 @@
     "vercel-postbuild": "npm run postinstall"
   },
   "dependencies": {
-    "@prisma/client": "^6.5.0",
-    "prisma": "^6.5.0",
+    "@prisma/client": "^5.10.0",
+    "prisma": "^5.10.0",
     "next": "14.1.0",
     "@clerk/nextjs": "^4.29.3",
     "@headlessui/react": "^1.7.18",
