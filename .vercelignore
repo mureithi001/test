@@ -25,10 +25,7 @@ yarn-error.log*
 # Vercel
 .vercel
 .vercel.json
-
-# Logs
-logs
-*.log
+.vercelignore
 
 # IDE
 .idea
@@ -36,40 +33,15 @@ logs
 *.swp
 *.swo
 
-# Optional npm cache directory
-.npm
+# Logs
+logs
+*.log
 
-# Optional eslint cache
-.eslintcache
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
-.env
-.env.local
-.env.*.local
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
-.parcel-cache
-
-# Next.js
-.next
-out
-
-# TypeScript
-*.tsbuildinfo
-
-# Production
-build
-
-# Misc
+# OS generated files
 .DS_Store
-*.pem
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
